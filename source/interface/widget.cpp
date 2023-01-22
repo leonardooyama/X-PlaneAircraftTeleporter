@@ -30,16 +30,16 @@ Widget::Widget(QWidget *parent)
 
     UDPSocketSender = new QUdpSocket(this);
     UDPSocketReceiver = new QUdpSocket(this);
-    bool bindSuccess = UDPSocketReceiver->bind(QHostAddress::LocalHost, 15858, QAbstractSocket::ReuseAddressHint);
+    bool bindSuccess = UDPSocketReceiver->bind(QHostAddress::LocalHost, 15860, QAbstractSocket::ReuseAddressHint);
     QString bindStatusString;
 
     if (bindSuccess)
     {
-        bindStatusString = "Success binding UDP port " + QString::number(15858) + ".";
+        bindStatusString = "Success binding UDP port " + QString::number(15860) + ".";
     }
     else
     {
-        bindStatusString = "Failed binding UDP port " + QString::number(15858) + ".";
+        bindStatusString = "Failed binding UDP port " + QString::number(15860) + ".";
     }
     ui->label_SendStatus->setText(bindStatusString);
     ui->label_CurrentLatLongElev->setText("No data received.");
@@ -69,7 +69,7 @@ void Widget::handlePushButtomSendClicked()
     strcpy_s(pluginSig, pluginSignature.size()+1, pluginSignature.c_str());
     outStream << pluginSig << ui->lineEdit_Latitude->text().toDouble() << ui->lineEdit_Longitude->text().toDouble();
     QNetworkDatagram datagramToSend;
-    datagramToSend.setDestination(QHostAddress::LocalHost, 15857);
+    datagramToSend.setDestination(QHostAddress::LocalHost, 15859);
     datagramToSend.setData(dataToSend);
     UDPSocketSender->writeDatagram(datagramToSend);
     delete[] pluginSig;

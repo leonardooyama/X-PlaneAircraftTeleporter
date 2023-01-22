@@ -104,16 +104,16 @@ PLUGIN_API int XPluginStart(char *	outName, char *	outSig, char *	outDesc)
     DataRefFlightModelLon = XPLMFindDataRef("sim/flightmodel/position/longitude");
     DataRefFlightModelElev = XPLMFindDataRef("sim/flightmodel/position/elevation");
 
-    bool bindSuccess = UDPSocketReceiver->bind(QHostAddress::LocalHost, 15857, QAbstractSocket::ReuseAddressHint);
+    bool bindSuccess = UDPSocketReceiver->bind(QHostAddress::LocalHost, 15859, QAbstractSocket::ReuseAddressHint);
     QString debugString;
     if (bindSuccess)
     {
-        debugString = "Success binding UDP port " + QString::number(15857) + ".";
+        debugString = "Success binding UDP port " + QString::number(15859) + ".";
         DebugToXPlaneLog(debugString);
     }
     else
     {
-        debugString = "Failed binding UDP port " + QString::number(15857) + ".";
+        debugString = "Failed binding UDP port " + QString::number(15859) + ".";
         DebugToXPlaneLog(debugString);
     }
     return 1;
@@ -158,7 +158,7 @@ float FlightLoopListenUDPSocket(float inElapsedSinceLastCall, float inElapsedTim
     strcpy_s(dataType, sizeof("current")+1, "current");
     outStream << pluginSig << dataType << lat << lon << elev;
     QNetworkDatagram datagramToSend;
-    datagramToSend.setDestination(QHostAddress::LocalHost, 15858);
+    datagramToSend.setDestination(QHostAddress::LocalHost, 15860);
     datagramToSend.setData(dataToSend);
     UDPSocketSender->writeDatagram(datagramToSend);
     delete[] dataType;
@@ -205,7 +205,7 @@ void ReadDataFromSocket()
     strcpy_s(dataType, sizeof("updated")+1, "updated");
     outStream << pluginSig << dataType << receivedLat << receivedLon;
     QNetworkDatagram datagramToSend;
-    datagramToSend.setDestination(QHostAddress::LocalHost, 15858);
+    datagramToSend.setDestination(QHostAddress::LocalHost, 15860);
     datagramToSend.setData(dataToSend);
     UDPSocketSender->writeDatagram(datagramToSend);
     delete[] dataType;
